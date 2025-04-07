@@ -12,7 +12,7 @@ This repository contains my weekly assignments for ATU module 8640 -- WEB SERVIC
 1. An accompanying web interface, using AJAX calls, to perform CRUD operations. 
 2. The ability to link to, and update, outside datasets.
 3. Have multiple database tables.
-4. Will be hosted online via Azure.
+4. Will be hosted online via PythonAnywhere.
 
 ## Use of this Project
 
@@ -26,6 +26,7 @@ To understand how the workbook has developped to date, please see below a timeli
 
 - 31/03/2025 - Created ReadMe and Gitignore file. Gitignore file generated using the template at Python gitignore template at https://github.com/github/gitignore/blob/main/Python.gitignore, the Windows gitignore template at https://github.com/github/gitignore/blob/main/Global/Windows.gitignore, the MacOS gitignore template at https://github.com/github/gitignore/blob/main/Global/macOS.gitignore and the Linux gitignore template at https://github.com/github/gitignore/blob/main/Global/Linux.gitignore.
 - 03/04/2025 - Set up flask server. Course material referenced: WSAA6.5 REST for project
+- 07/04/2025 - Added CRUD operators for flask server. Course material referenced: WSAA6.5 REST for project
 
 ## Getting help
 
