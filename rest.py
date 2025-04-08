@@ -1,12 +1,7 @@
 import pandas as pd
 from flask import Flask, request, jsonify
 
-UPLOAD_FOLDER = os.path.join('staticFiles', 'uploads')
-ALLOWED_EXTENSIONS = {'csv'}
-
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.secret_key = 'This is your secret key to utilize session in Flask'
 
 grants = []
 
