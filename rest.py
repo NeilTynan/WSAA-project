@@ -1,25 +1,31 @@
+import pandas as pd
 from flask import Flask, request, jsonify
 
+UPLOAD_FOLDER = os.path.join('staticFiles', 'uploads')
+ALLOWED_EXTENSIONS = {'csv'}
+
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = 'This is your secret key to utilize session in Flask'
+
+grants = []
 
 @app.route('/')
 def home():
     return "Welcome to the Research Ireland Grants API!"
 
-grants = []
-
 @app.route('/grants', methods=['GET'])
-def get():
+def get_grants():
     return jsonify(grants)
 
 @app.route('/grants', methods=['POST'])
-def create():
+def create_grant():
     new_grant = request.json
     grants.append(new_grant)
     return jsonify(new_grant), 201
 
 @app.route('/grants/<int:grant_id>', methods=['PUT'])
-def update(grant_id):
+def update_grant(grant_id):
     updated_grant = request.json
     grants[grant_id] = updated_grant
     return jsonify(updated_grant)
@@ -29,5 +35,5 @@ def delete_grant(grant_id):
     deleted_grant = grants.pop(grant_id)
     return jsonify(deleted_grant)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
