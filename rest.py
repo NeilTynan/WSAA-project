@@ -1,5 +1,4 @@
-import pandas as pd
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -7,7 +6,7 @@ grants = []
 
 @app.route('/')
 def home():
-    return "Welcome to the Research Ireland Grants API!"
+    return render_template('1table.html')
 
 @app.route('/grants', methods=['GET'])
 def get_grants():
