@@ -85,7 +85,7 @@ footer {
       <li><a href="#">Analysis</a></li>
     </ul>
   </nav>
-<!-- https://stackoverflow.com/questions/928849/setting-table-column-width#928859 -->
+# <!-- https://stackoverflow.com/questions/928849/setting-table-column-width#928859 -->
   <article>
     <h1>Grants Table</h1>
     <p>You can see here a full list of all the grants currently in this website's dataset.</p>
@@ -110,6 +110,78 @@ footer {
 <footer>
   <p>Footer</p>
 </footer>
+<script>
 
+  function getAll(callback){
+        console.log("in get all");
+        $.ajax({
+            "url": "http://atuntynan.pythonanywhere.com/grants",
+            "method": "GET",
+            "data": "",
+            "dataType": "JSON",
+            "success": function(result) {
+                //console.log(result);
+                callback(result);
+            },
+            "error": function(xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+    function creategrant(grant, callback){
+        console.log(JSON.stringify(grant));
+        $.ajax({
+            "url": "http://atuntynan.pythonanywhere.com/grants",
+            "method": "POST",
+            "data": JSON.stringify(grant),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function(result) {
+                //console.log(result);
+                callback(result);
+            },
+            "error": function(xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+    function updategrant(grant, callback){
+        console.log(JSON.stringify(grant));
+        $.ajax({
+            "url": "http://atuntynan.pythonanywhere.com/grants" + encodeURI(grant.id),
+            "method": "PUT",
+            "data": JSON.stringify(grant),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function(result) {
+                console.log(result);
+                callback(result);
+            },
+            "error": function(xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+    function deletegrant(id, callback){
+        $.ajax({
+            "url": "http://atuntynan.pythonanywhere.com/grants" + id,
+            "method": "DELETE",
+            "data": "",
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success": function(result) {
+                console.log(result);
+                callback(result);
+            },
+            "error": function(xhr, status, error) {
+                console.log("error: " + status + " msg:" + error);
+            }
+        });
+    }
+
+</script>
 </body>
 </html>
