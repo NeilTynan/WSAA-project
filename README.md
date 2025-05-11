@@ -10,10 +10,10 @@ This README has been written with [GitHub's documentation on README's](https://d
 This repository contains my weekly assignments for ATU module 8640 -- WEB SERVICES AND APPLICATIONS. It contains the project work for the course, which is focused on the construction of a REST API which will display information related to the old SFI grant comitments file. The intentions is this API will have a numer of features:
 
 1. An accompanying web interface, using AJAX calls, to perform CRUD operations. 
-2. The ability to analyse the data in realtime.
-3. Have multiple database tables.
+2. Save the data into a database table that you view elsewhere in your application 
+3. The ability to analyse the data in realtime.
 4. Will be hosted online via PythonAnywhere.
-5. Will perform more than CRUD operations (via allowing users to filter and export data)
+5. Manipulate/analyse the data in real time.
 
 ## Use of this Project
 

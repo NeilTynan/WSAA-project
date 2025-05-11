@@ -56,7 +56,7 @@ class grantDAO:
 
     def create(self, grant):
         cursor = self.getcursor()
-        sql="insert into funding (title, author, institution, amount) values (%s,%s,%s,%s,%s)"
+        sql="insert into funding (title, author, institution, programme, amount) values (%s,%s,%s,%s,%s)"
         values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("programme"), grant.get("amount"))
         cursor.execute(sql, values)
 
