@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> # chatgpt
 <title>CSS Template</title> 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,12 +43,12 @@ article {
   height: 300px;
 }
 
-#bookTable {
+#grantTable {
   width: 100%;
   border-collapse: collapse;
 }
 
-#bookTable th, #bookTable td {
+#grantTable th, #grantTable td {
   padding: 8px;
   text-align: left;
 }
@@ -93,25 +93,15 @@ footer {
   <h1>Books</h1>
   <div><button id="button-showCreate" onclick="showCreate()">Create a book</button><br/><br/></div>
   <div>
-      <table border="1" id="bookTable">
+      <table border="1" id="grantTable">
           <tr>
                   <th>id</th>
                   <th>Title</th>
                   <th>Author</th>
-                  <th>Price</th>
-                  <th>Update</th>
+                  <th>Institution</th>
+                  <th>Amount</th>
                   <th>Delete</th>
           </tr>
-          <tr id="1">
-              <td>1</td>
-              <td>Harry Potter does something</td>
-              <td>JK Rowling</td>
-              <td>12</td>
-              <td><button onclick="showUpdate(this)">update</button></td>
-              <td><button onclick="doDelete(this)">delete</button></td>
-             
-      </tr>
-
   </table>
   <br/>
   </div>
@@ -121,8 +111,9 @@ footer {
       id <input type="text" name="id"><br/>
       Title <input type="text" name="title"><br/>
       Author <input type="text" name="author"><br/>
-      Price <input type="number" name="price"><br/>
-     
+      Institution <input type="text" name="institution"><br/>
+      Amount <input type="number" name="amount"><br/>
+
       <span><button id="button-doCreate" onclick="doCreate()">Create</button></span>
  <span><button id="button-doUpdate" onclick="doUpdate()">Update</button></span>
        <!-- "display:none" will make it hidden-->
@@ -142,7 +133,7 @@ footer {
       document.getElementById("updateLabel").style.display = "none"
 
       document.getElementById("button-showCreate").style.display = "none"
-      document.getElementById("bookTable").style.display = "none"
+      document.getElementById("grantTable").style.display = "none"
       
   }
   function showUpdate(buttonElement){
@@ -154,20 +145,20 @@ footer {
       document.getElementById("updateLabel").style.display = "inline"
 
       document.getElementById("button-showCreate").style.display = "none"
-      document.getElementById("bookTable").style.display = "none"
+      document.getElementById("grantTable").style.display = "none"
 
       rowElement= buttonElement.parentNode.parentNode
-      book = getBookFromRow(rowElement)
+      grant = getGrantFromRow(rowElement)
       //console.log("updating")
       //console.log(book)
-      populateFormWithBook(book)
+      populateFormWithGrant(grant)
       
   }
   function showViewall(){
       document.getElementById("createUpdateForm").style.display = "none"
      
       document.getElementById("button-showCreate").style.display = "block"
-      document.getElementById("bookTable").style.display = "block"
+      document.getElementById("grantTable").style.display = "block"
       
   }
   function clearForm(){
@@ -177,94 +168,105 @@ footer {
       form.querySelector('input[name="id"]').value  =''
       form.querySelector('input[name="author"]').value=''
       form.querySelector('input[name="title"]').value=''
-      form.querySelector('input[name="price"]').value=''
+      form.querySelector('input[name="institution"]').value=''
+      form.querySelector('input[name="amount"]').value=''
   }
   
-  function getBookFromForm(){
+  function getGrantFromForm(){
       var form = document.getElementById('createUpdateForm')
 
-       var book = {}
-    book.id = form.querySelector('input[name="id"]').value
-    book.title = form.querySelector('input[name="title"]').value
-    book.author = form.querySelector('input[name="author"]').value
-    book.price = form.querySelector('input[name="price"]').value
+       var grant = {}
+    grant.id = form.querySelector('input[name="id"]').value
+    grant.title = form.querySelector('input[name="title"]').value
+    grant.author = form.querySelector('input[name="author"]').value
+    grant.institution = form.querySelector('input[name="institution"]').value
+    grant.amount = form.querySelector('input[name="amount"]').value
     //console.log(JSON.stringify(book))
-      return book
+      return grant
   }
-  function populateFormWithBook(book){
+  function populateFormWithGrant(grant){
      var form = document.getElementById('createUpdateForm')
     form.querySelector('input[name="id"]').disabled = true
-     form.querySelector('input[name="id"]').value  = book.id
-     form.querySelector('input[name="title"]').value= book.title
-    form.querySelector('input[name="author"]').value= book.author
-    form.querySelector('input[name="price"]').value= book.price
+     form.querySelector('input[name="id"]').value  = grant.id
+     form.querySelector('input[name="title"]').value= grant.title
+    form.querySelector('input[name="author"]').value= grant.author
+    form.querySelector('input[name="institution"]').value= grant.institution
+    form.querySelector('input[name="amount"]').value= grant.amount
 }
 
 
-  function addBookToTable(book){
-      var tableElement = document.getElementById('bookTable')
+  function addGrantToTable(grant){
+      var tableElement = document.getElementById('grantTable')
       var rowElement = tableElement.insertRow(-1)
       
-      rowElement.setAttribute('id',book.id)
+      rowElement.setAttribute('id',grant.id)
       
       var cell1 = rowElement.insertCell(0);
-      cell1.innerHTML = book.id
+      cell1.innerHTML = grant.id
       var cell2 = rowElement.insertCell(1);
-      cell2.innerHTML = book.title
+      cell2.innerHTML = grant.title
       var cell3 = rowElement.insertCell(2);
-      cell3.innerHTML = book.author
+      cell3.innerHTML = grant.author
       var cell4 = rowElement.insertCell(3);
-      cell4.innerHTML = book.price
-      var cell5 = rowElement.insertCell(4);
-      cell5.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+      cell4.innerHTML = grant.institution
+      var cell5= rowElement.insertCell(4);
+      cell5.innerHTML = grant.amount
       var cell6 = rowElement.insertCell(5);
-      cell6.innerHTML = '<button onclick=doDelete(this)>delete</button>'
+      cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+      var cell7 = rowElement.insertCell(6);
+      cell7.innerHTML = '<button onclick=doDelete(this)>delete</button>'
 
   }
-  function getBookFromRow(rowElement){
-      var book ={}
-      book.id  = rowElement.cells[0].firstChild.textContent
-      book.title = rowElement.cells[1].firstChild.textContent
-      book.author = rowElement.cells[2].firstChild.textContent
-      book.price = rowElement.cells[3].firstChild.textContent
-      return book
+  function getGrantFromRow(rowElement){
+      var grant ={}
+      grant.id  = rowElement.cells[0].firstChild.textContent
+      grant.title = rowElement.cells[1].firstChild.textContent
+      grant.author = rowElement.cells[2].firstChild.textContent
+      grant.institution = rowElement.cells[3].firstChild.textContent
+      grant.amount = rowElement.cells[4].firstChild.textContent
+      return grant
   }
-  function setBookInRow(rowElement, book){
-      rowElement.cells[0].firstChild.textContent= book.id  
-      rowElement.cells[1].firstChild.textContent= book.title 
-      rowElement.cells[2].firstChild.textContent= book.author
-      rowElement.cells[3].firstChild.textContent= book.price
+  function setGrantInRow(rowElement, grant){
+      rowElement.cells[0].firstChild.textContent= grant.id  
+      rowElement.cells[1].firstChild.textContent= grant.title 
+      rowElement.cells[2].firstChild.textContent= grant.author
+      rowElement.cells[3].firstChild.textContent= grant.institution
+      rowElement.cells[4].firstChild.textContent= grant.amount
 }
 
   function doCreate(){
-      console.log("creating a book")
-      book = getBookFromForm()
-      //console.log(book)
+      console.log("creating a grant")
+      grant = getGrantFromForm()
+      //console.log(grant)
       // I need to wait until I get the id from the server before adding this to the table
       // so  I put that code in the callback function
-      createBook(convertDisplayBookToServerBook(book), processCreateResponse)
+      createGrant(convertDisplayGrantToServerGrant(grant), processCreateResponse)
+      console.log("About to create grant:");
+  console.log(getGrantFromForm());
+  console.log("Server payload:");
+  console.log(JSON.stringify(convertDisplayGrantToServerGrant(getGrantFromForm())));
      
   }
   function doUpdate(){
-      book= getBookFromForm()
-      console.log(book)
-      var rowElement = document.getElementById(book.id)
-      setBookInRow(rowElement, book)
+      grant= getGrantFromForm()
+      console.log(grant)
+      var rowElement = document.getElementById(grant.id)
+      setGrantInRow(rowElement, grant)
       // now I am updating on the server
       // yes there is a change that it will be updated on the table and not the server
-      updateBook(convertDisplayBookToServerBook(book), doNothing)
+      updateGrant(convertDisplayGrantToServerGrant(grant), doNothing)
      
       showViewall()
       clearForm()
   }
   function doDelete(buttonElement){
       console.log("in delete")
-      var tableElement = document.getElementById('bookTable')
+      var tableElement = document.getElementById('grantTable')
       var rowElement = buttonElement.parentNode.parentNode;
-      // I need the book id
+      // I need the grant id
       id = rowElement.getAttribute("id")
       console.log("deleting "+id)
-      deleteBook(id, doNothing)
+      deleteGrant(id, doNothing)
      
 
       index = rowElement.rowIndex
@@ -277,40 +279,43 @@ footer {
   function processGetAllResponse(result){
       console.log("in process")
       //console.log(result)
-      for (book of result){
-          //console.log(book)
-          // issue the format of the book object is different from lab06.02
-          // there are two solutions change the book object in lan06.02 to have capitals 
+      for (grant of result){
+          //console.log(grant)
+          // issue the format of the grant object is different from lab06.02
+          // there are two solutions change the grant object in lan06.02 to have capitals 
           // or convert
-          displayBook = {}
-          displayBook.id = book.id
-          displayBook.author = book.author
-          displayBook.title = book.title
-          displayBook.price = book.price
-          // you can now pass it to addBookToTable
-          //console.log(displayBook)
-          addBookToTable(displayBook)
+          displayGrant = {}
+          displayGrant.id = grant.id
+          displayGrant.author = grant.author
+          displayGrant.title = grant.title
+          displayGrant.institution = grant.institution
+          displayGrant.amount = grant.amount
+          // you can now pass it to addGrantToTable
+          //console.log(displayGrant)
+          addGrantToTable(displayGrant)
       }
   }
-  function convertDisplayBookToServerBook(displayBook){
-      serverBook = {}
-      serverBook.id = displayBook.id
-      serverBook.title = displayBook.title
-      serverBook.author = displayBook.author
-      serverBook.price = parseInt(displayBook.price) // convert the string to an int
-      return serverBook
+  function convertDisplayGrantToServerGrant(displayGrant){
+      serverGrant = {}
+      serverGrant.id = displayGrant.id
+      serverGrant.title = displayGrant.title
+      serverGrant.author = displayGrant.author
+      serverGrant.institution = displayGrant.institution
+      serverGrant.amount = parseInt(displayGrant.amount) // convert the string to an int
+      return serverGrant
   }
-  function convertServerBookToDisplayBook(book){
-      displayBook = {}
-      displayBook.id = book.id
-      displayBook.author = book.author
-      displayBook.title = book.title
-      displayBook.price = book.price
-      return displayBook
+  function convertServerGrantToDisplayGrant(grant){
+      displayGrant = {}
+      displayGrant.id = grant.id
+      displayGrant.author = grant.author
+      displayGrant.title = grant.title
+      displayGrant.institution = grant.institution
+      displayGrant.amount = grant.amount
+      return displayGrant
   }
   function processCreateResponse(result){
-      displayBook = convertServerBookToDisplayBook(result)
-      addBookToTable(displayBook)
+      displayGrant = convertServerGrantToDisplayGrant(result)
+      addGrantToTable(displayGrant)
       showViewall()
       clearForm()
   }
@@ -319,7 +324,46 @@ footer {
       console.log("nothing:"+result)
       return "done"
   }
+
    getAll(processGetAllResponse)
+
+
+function getAll(callback) {
+    $.ajax({
+        url: '/grants',
+        method: 'GET',
+        dataType: 'json',
+        success: callback
+    });
+}
+
+function createGrant(grant, callback) {
+    $.ajax({
+        url: '/grants',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(grant),
+        success: callback
+    });
+}
+
+function updateGrant(grant, callback) {
+    $.ajax({
+        url: '/grants/' + grant.id,
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(grant),
+        success: callback
+    });
+}
+
+function deleteGrant(id, callback) {
+    $.ajax({
+        url: '/grants/' + id,
+        method: 'DELETE',
+        success: callback
+    });
+}
 
 </script>
 

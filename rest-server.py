@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template, abort
-from grantDAOskeleton import grantDAO
+from grantDAO import grantDAO
 
 app = Flask(__name__)
 
@@ -8,6 +8,10 @@ grants = []
 @app.route('/')
 def home():
     return render_template('1table.html')
+
+@app.route('/grants/<int:id>', methods=['GET'])
+def find_by_id(id):
+    return jsonify(grantDAO.findByID(id))
 
 @app.route('/grants', methods=['GET'])
 def get_grants():
@@ -18,16 +22,16 @@ def create_grant():
     jsonstring = request.json
     grant = {}
     if "title" not in jsonstring:
-        abort(401)
+        abort(400)
     grant["title"] = jsonstring["title"]
     if "author" not in jsonstring:
-        abort(401)
+        abort(400)
     grant["author"] = jsonstring["author"]
     if "institution" not in jsonstring:
-        abort(401)
+        abort(400)
     grant["institution"] = jsonstring["institution"]
     if "amount" not in jsonstring:
-        abort(401)
+        abort(400)
     grant["amount"] = jsonstring["amount"]
     return jsonify(grantDAO.create(grant))
 # abort option
@@ -49,7 +53,7 @@ def update_grant(id):
 
 @app.route('/grants/<int:id>', methods=['DELETE'])
 def delete_grant(id):
-    return jsonify(grantDAO.delete(id, grant))
+    return jsonify(grantDAO.delete(id))
 
 if __name__ == '__main__':
     app.run(debug=True)
