@@ -95,9 +95,9 @@ footer {
 <section>
   <nav>
     <ul>
-      <li><a href="#">Grant Table</a></li>
+      <h3>Navigation</h3>
       <li><a href="#">Add/Update a Grant</a></li>
-      <li><a href="#">Analysis</a></li>
+      <li><a href="#">Analyse a grant</a></li>
     </ul>
   </nav>
   
@@ -113,6 +113,7 @@ footer {
                   <th>Title</th>
                   <th>Author</th>
                   <th>Institution</th>
+                  <th>Programme</th>
                   <th>Amount</th>
                   <th>Update</th>
                   <th>Delete</th>
@@ -127,6 +128,7 @@ footer {
       Title <input type="text" name="title"><br/>
       Author <input type="text" name="author"><br/>
       Institution <input type="text" name="institution"><br/>
+      Programme <input type="text" name="programme"><br/>
       Amount <input type="number" name="amount"><br/>
 
       <span><button id="button-doCreate" onclick="doCreate()">Add</button></span>
@@ -181,6 +183,7 @@ footer {
       form.querySelector('input[name="author"]').value=''
       form.querySelector('input[name="title"]').value=''
       form.querySelector('input[name="institution"]').value=''
+      form.querySelector('input[name="programme"]').value=''
       form.querySelector('input[name="amount"]').value=''
   }
   
@@ -192,6 +195,7 @@ footer {
     grant.title = form.querySelector('input[name="title"]').value
     grant.author = form.querySelector('input[name="author"]').value
     grant.institution = form.querySelector('input[name="institution"]').value
+    grant.programme = form.querySelector('input[name="programme"]').value
     grant.amount = form.querySelector('input[name="amount"]').value
     //console.log(JSON.stringify(book))
       return grant
@@ -203,6 +207,7 @@ footer {
     form.querySelector('input[name="title"]').value= grant.title
     form.querySelector('input[name="author"]').value= grant.author
     form.querySelector('input[name="institution"]').value= grant.institution
+        form.querySelector('input[name="programme"]').value= grant.programme
     form.querySelector('input[name="amount"]').value= grant.amount
 }
 
@@ -221,11 +226,13 @@ footer {
       cell3.innerHTML = grant.author
       var cell4 = rowElement.insertCell(3);
       cell4.innerHTML = grant.institution
-      var cell5= rowElement.insertCell(4);
+      var cell4 = rowElement.insertCell(4);
+      cell4.innerHTML = grant.programme
+      var cell5= rowElement.insertCell(5);
       cell5.innerHTML = grant.amount
-      var cell6 = rowElement.insertCell(5);
+      var cell6 = rowElement.insertCell(6);
       cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
-      var cell7 = rowElement.insertCell(6);
+      var cell7 = rowElement.insertCell(7);
       cell7.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
 
   }
@@ -235,7 +242,8 @@ footer {
       grant.title = rowElement.cells[1].firstChild.textContent
       grant.author = rowElement.cells[2].firstChild.textContent
       grant.institution = rowElement.cells[3].firstChild.textContent
-      grant.amount = rowElement.cells[4].firstChild.textContent
+      grant.programme = rowElement.cells[4].firstChild.textContent
+      grant.amount = rowElement.cells[5].firstChild.textContent
       return grant
   }
   function setGrantInRow(rowElement, grant){
@@ -243,7 +251,8 @@ footer {
       rowElement.cells[1].firstChild.textContent= grant.title 
       rowElement.cells[2].firstChild.textContent= grant.author
       rowElement.cells[3].firstChild.textContent= grant.institution
-      rowElement.cells[4].firstChild.textContent= grant.amount
+      rowElement.cells[4].firstChild.textContent= grant.programme
+      rowElement.cells[5].firstChild.textContent= grant.amount
 }
 
   function doCreate(){
@@ -299,6 +308,7 @@ footer {
           displayGrant.author = grant.author
           displayGrant.title = grant.title
           displayGrant.institution = grant.institution
+          displayGrant.programme = grant.programme
           displayGrant.amount = grant.amount
           // you can now pass it to addGrantToTable
           //console.log(displayGrant)
@@ -311,6 +321,7 @@ footer {
       serverGrant.title = displayGrant.title
       serverGrant.author = displayGrant.author
       serverGrant.institution = displayGrant.institution
+      serverGrant.programme = displayGrant.programme
       serverGrant.amount = parseInt(displayGrant.amount) // convert the string to an int
       return serverGrant
   }
@@ -320,6 +331,7 @@ footer {
       displayGrant.author = grant.author
       displayGrant.title = grant.title
       displayGrant.institution = grant.institution
+      displayGrant.programme = grant.programme
       displayGrant.amount = grant.amount
       return displayGrant
   }

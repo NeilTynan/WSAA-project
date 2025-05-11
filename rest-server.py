@@ -30,6 +30,9 @@ def create_grant():
     if "institution" not in jsonstring:
         abort(400)
     grant["institution"] = jsonstring["institution"]
+    if "programme" not in jsonstring:
+        abort(400)
+    grant["programme"] = jsonstring["programme"]
     if "amount" not in jsonstring:
         abort(400)
     grant["amount"] = jsonstring["amount"]
@@ -47,6 +50,8 @@ def update_grant(id):
         grant["author"] = jsonstring["author"]
     if "institution" in jsonstring:
         grant["institution"] = jsonstring["institution"]
+    if "programme" in jsonstring:
+        grant["programme"] = jsonstring["programme"]
     if "amount" in jsonstring:
         grant["amount"] = jsonstring["amount"]
     return jsonify(grantDAO.update(id, grant))

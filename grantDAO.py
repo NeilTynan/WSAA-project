@@ -56,8 +56,8 @@ class grantDAO:
 
     def create(self, grant):
         cursor = self.getcursor()
-        sql="insert into funding (title, author, institution, amount) values (%s,%s,%s,%s)"
-        values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("amount"))
+        sql="insert into funding (title, author, institution, amount) values (%s,%s,%s,%s,%s)"
+        values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("programme"), grant.get("amount"))
         cursor.execute(sql, values)
 
         self.connection.commit()
@@ -69,9 +69,9 @@ class grantDAO:
 
     def update(self, id, grant):
         cursor = self.getcursor()
-        sql="update funding set title= %s,author=%s, institution=%s, amount=%s  where id = %s"
+        sql="update funding set title= %s,author=%s, institution=%s, programme=%s, amount=%s  where id = %s"
         
-        values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("amount"),id)
+        values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("programme"), grant.get("amount"),id)
         cursor.execute(sql, values)
         self.connection.commit()
         self.closeAll()
@@ -89,7 +89,7 @@ class grantDAO:
         print("delete done")
 
     def convertToDictionary(self, resultLine):
-        attkeys=['id','title','author', 'institution', "amount"]
+        attkeys=['id','title','author', 'institution', "programme", "amount"]
         book = {}
         currentkey = 0
         for attrib in resultLine:
