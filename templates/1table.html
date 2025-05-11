@@ -22,10 +22,14 @@ header {
   color: white;
 }
 
+section {
+  display:flex;
+  flex-direction: row;
+}
+
 nav {
   float: left;
   width: 20%;
-  height: 300px;
   background: #ccc;
   padding: 20px;
 }
@@ -40,7 +44,15 @@ article {
   padding: 20px;
   width: 80%;
   background-color: #f1f1f1;
-  height: 300px;
+}
+
+#grantTable th {
+  background-color: #af7a73; /* Change this to your preferred color */
+  color: white; /* Optional: Changes text color to white for contrast */
+}
+
+#grantTable td {
+  background-color: #f9f9f9; /* Optional: Sets a different color for table rows */
 }
 
 #grantTable {
@@ -90,8 +102,10 @@ footer {
   </nav>
   
   <article>
-  <h1>Books</h1>
-  <div><button id="button-showCreate" onclick="showCreate()">Create a book</button><br/><br/></div>
+  <h1>Grant Table</h1>
+  <p>Here's the full list of the grants used by the comparison tool. The information below has been pulled from the old SFI grant commitments file <a href="https://data.gov.ie/dataset/science-foundation-ireland-grants-commitments/resource/1dda5892-aeff-4588-a94f-b548984d9340">SFI grant commitments file</a> hosted on data.gov.ie. 
+    However, if you think it's missing a grant, feel free to add it by using the "Add a Grant" button below. Similarily, if you think any of the data is wrong, you can also update it using the "Update" and "Delete" buttons on the table.</p>
+  <div><button id="button-showCreate" onclick="showCreate()">Add a Grant</button><br/><br/></div>
   <div>
       <table border="1" id="grantTable">
           <tr>
@@ -100,6 +114,7 @@ footer {
                   <th>Author</th>
                   <th>Institution</th>
                   <th>Amount</th>
+                  <th>Update</th>
                   <th>Delete</th>
           </tr>
   </table>
@@ -107,16 +122,15 @@ footer {
   </div>
   <div id="createUpdateForm" style="display:none">
       <!-- spans are like divs but do not go onto a new line -->
-      <h2><span id="createLabel">Create a</span> <span id="updateLabel">Update this</span> Book</h2>
+      <h2><span id="createLabel">Add a</span> <span id="updateLabel">Update this</span> Grant</h2>
       id <input type="text" name="id"><br/>
       Title <input type="text" name="title"><br/>
       Author <input type="text" name="author"><br/>
       Institution <input type="text" name="institution"><br/>
       Amount <input type="number" name="amount"><br/>
 
-      <span><button id="button-doCreate" onclick="doCreate()">Create</button></span>
- <span><button id="button-doUpdate" onclick="doUpdate()">Update</button></span>
-       <!-- "display:none" will make it hidden-->
+      <span><button id="button-doCreate" onclick="doCreate()">Add</button></span>
+      <span><button id="button-doUpdate" onclick="doUpdate()">Update</button></span>
 
 
   </div>
@@ -138,7 +152,6 @@ footer {
   }
   function showUpdate(buttonElement){
       document.getElementById("createUpdateForm").style.display = "block"
-     
       document.getElementById("button-doCreate").style.display = "none"
       document.getElementById("button-doUpdate").style.display = "block"
       document.getElementById("createLabel").style.display = "none"
@@ -156,7 +169,6 @@ footer {
   }
   function showViewall(){
       document.getElementById("createUpdateForm").style.display = "none"
-     
       document.getElementById("button-showCreate").style.display = "block"
       document.getElementById("grantTable").style.display = "block"
       
@@ -175,7 +187,7 @@ footer {
   function getGrantFromForm(){
       var form = document.getElementById('createUpdateForm')
 
-       var grant = {}
+      var grant = {}
     grant.id = form.querySelector('input[name="id"]').value
     grant.title = form.querySelector('input[name="title"]').value
     grant.author = form.querySelector('input[name="author"]').value
@@ -185,10 +197,10 @@ footer {
       return grant
   }
   function populateFormWithGrant(grant){
-     var form = document.getElementById('createUpdateForm')
+    var form = document.getElementById('createUpdateForm')
     form.querySelector('input[name="id"]').disabled = true
-     form.querySelector('input[name="id"]').value  = grant.id
-     form.querySelector('input[name="title"]').value= grant.title
+    form.querySelector('input[name="id"]').value  = grant.id
+    form.querySelector('input[name="title"]').value= grant.title
     form.querySelector('input[name="author"]').value= grant.author
     form.querySelector('input[name="institution"]').value= grant.institution
     form.querySelector('input[name="amount"]').value= grant.amount
@@ -214,7 +226,7 @@ footer {
       var cell6 = rowElement.insertCell(5);
       cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
       var cell7 = rowElement.insertCell(6);
-      cell7.innerHTML = '<button onclick=doDelete(this)>delete</button>'
+      cell7.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
 
   }
   function getGrantFromRow(rowElement){
@@ -245,8 +257,8 @@ footer {
   console.log(getGrantFromForm());
   console.log("Server payload:");
   console.log(JSON.stringify(convertDisplayGrantToServerGrant(getGrantFromForm())));
-     
   }
+
   function doUpdate(){
       grant= getGrantFromForm()
       console.log(grant)
@@ -255,7 +267,6 @@ footer {
       // now I am updating on the server
       // yes there is a change that it will be updated on the table and not the server
       updateGrant(convertDisplayGrantToServerGrant(grant), doNothing)
-     
       showViewall()
       clearForm()
   }
@@ -267,7 +278,6 @@ footer {
       id = rowElement.getAttribute("id")
       console.log("deleting "+id)
       deleteGrant(id, doNothing)
-     
 
       index = rowElement.rowIndex
       tableElement.deleteRow(index);
@@ -325,7 +335,7 @@ footer {
       return "done"
   }
 
-   getAll(processGetAllResponse)
+    getAll(processGetAllResponse)
 
 
 function getAll(callback) {

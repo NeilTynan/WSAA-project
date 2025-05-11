@@ -246,3 +246,4 @@ $RECYCLE.BIN/
 .nfs*
 
 # my configuration files
+config.py
