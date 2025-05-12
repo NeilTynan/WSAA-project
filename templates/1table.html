@@ -28,7 +28,24 @@ section {
   background-color: #f1f1f1;
 }
 
+#researcherTable th {
+  background-color: #af7a73; /* Change this to your preferred color */
+  color: white; /* Optional: Changes text color to white for contrast */
+}
 
+#researcherTable td {
+  background-color: #f9f9f9; /* Optional: Sets a different color for table rows */
+}
+
+#researcherTable {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+#researcherTable th, #researcherTable td {
+  padding: 8px;
+  text-align: left;
+}
 
 #grantTable th {
   background-color: #af7a73; /* Change this to your preferred color */
@@ -50,7 +67,7 @@ section {
 }
 
 .container {
-  max-height: 450px;  /* adjust height as needed */
+  max-height: 300px;  /* adjust height as needed */
   overflow-y: auto;
   overflow-x: auto;
   border: 1px solid #ddd;
@@ -88,10 +105,27 @@ footer {
 <section>
   
   <article>
-  <h1>Grant Table</h1>
+  <h1>Add A Grant</h1>
+  <div><button id="button-showCreate" onclick="showCreate()">Add a Grant</button><br/><br/></div>
+  <h1>Researcher Table</h1>
+  <div class="container">
+    <table border="1" id="researcherTable">
+          <tr>
+                  <th>id</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Year</th>
+                  <th>Institution</th>
+                  <th>Programme</th>
+                  <th>Amount</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+          </tr>
+  </table>
+  <br/>
+  </div>
   <p>Here's the full list of the grants used by the comparison tool. The information below has been pulled from the old SFI grant commitments file <a href="https://data.gov.ie/dataset/science-foundation-ireland-grants-commitments/resource/1dda5892-aeff-4588-a94f-b548984d9340">SFI grant commitments file</a> hosted on data.gov.ie. 
     However, if you think it's missing a grant, feel free to add it by using the "Add a Grant" button below. Similarily, if you think any of the data is wrong, you can also update it using the "Update" and "Delete" buttons on the table.</p>
-  <div><button id="button-showCreate" onclick="showCreate()">Add a Grant</button><br/><br/></div>
   <h1>SFI Grant Table</h1>
   <div class="container">
     <table border="1" id="grantTable">
@@ -110,7 +144,6 @@ footer {
   <br/>
   </div>
   <div id="createUpdateForm" style="display:none">
-      <!-- spans are like divs but do not go onto a new line -->
       <h2><span id="createLabel">Add a</span> <span id="updateLabel">Update this</span> Grant</h2>
       id <input type="text" name="id"><br/>
       Title <input type="text" name="title"><br/>
@@ -121,21 +154,17 @@ footer {
       Amount <input type="number" name="amount"><br/>
       <span><button id="button-doCreate" onclick="doCreate()">Add</button></span>
       <span><button id="button-doUpdate" onclick="doUpdate()">Update</button></span>
-
-
-  </div>
-  
+   </div>
 </body>
 <script>
-  //console.log("hello world")
+
+// Grant Table
   function showCreate(){
       document.getElementById("createUpdateForm").style.display = "block"
-      
       document.getElementById("button-doCreate").style.display = "block"
       document.getElementById("button-doUpdate").style.display = "none"
       document.getElementById("createLabel").style.display = "inline"
       document.getElementById("updateLabel").style.display = "none"
-
       document.getElementById("button-showCreate").style.display = "none"
       document.getElementById("grantTable").style.display = "none"
       
@@ -146,17 +175,15 @@ footer {
       document.getElementById("button-doUpdate").style.display = "block"
       document.getElementById("createLabel").style.display = "none"
       document.getElementById("updateLabel").style.display = "inline"
-
       document.getElementById("button-showCreate").style.display = "none"
       document.getElementById("grantTable").style.display = "none"
 
       rowElement= buttonElement.parentNode.parentNode
       grant = getGrantFromRow(rowElement)
-      //console.log("updating")
-      //console.log(book)
       populateFormWithGrant(grant)
       
   }
+
   function showViewall(){
       document.getElementById("createUpdateForm").style.display = "none"
       document.getElementById("button-showCreate").style.display = "block"
@@ -178,7 +205,6 @@ footer {
   
   function getGrantFromForm(){
       var form = document.getElementById('createUpdateForm')
-
       var grant = {}
     grant.id = form.querySelector('input[name="id"]').value
     grant.title = form.querySelector('input[name="title"]').value
@@ -187,7 +213,6 @@ footer {
     grant.institution = form.querySelector('input[name="institution"]').value
     grant.programme = form.querySelector('input[name="programme"]').value
     grant.amount = form.querySelector('input[name="amount"]').value
-    //console.log(JSON.stringify(book))
       return grant
   }
   function populateFormWithGrant(grant){
@@ -253,9 +278,6 @@ footer {
   function doCreate(){
       console.log("creating a grant")
       grant = getGrantFromForm()
-      //console.log(grant)
-      // I need to wait until I get the id from the server before adding this to the table
-      // so  I put that code in the callback function
       createGrant(convertDisplayGrantToServerGrant(grant), processCreateResponse)
       console.log("About to create grant:");
       console.log(getGrantFromForm());
@@ -268,8 +290,6 @@ footer {
       console.log(grant)
       var rowElement = document.getElementById(grant.id)
       setGrantInRow(rowElement, grant)
-      // now I am updating on the server
-      // yes there is a change that it will be updated on the table and not the server
       updateGrant(convertDisplayGrantToServerGrant(grant), doNothing)
       showViewall()
       clearForm()
@@ -278,7 +298,6 @@ footer {
       console.log("in delete")
       var tableElement = document.getElementById('grantTable')
       var rowElement = buttonElement.parentNode.parentNode;
-      // I need the grant id
       id = rowElement.getAttribute("id")
       console.log("deleting "+id)
       deleteGrant(id, doNothing)
@@ -289,15 +308,9 @@ footer {
 
   }
 
-  // populate the table
   function processGetAllResponse(result){
       console.log("in process")
-      //console.log(result)
       for (grant of result){
-          //console.log(grant)
-          // issue the format of the grant object is different from lab06.02
-          // there are two solutions change the grant object in lan06.02 to have capitals 
-          // or convert
           displayGrant = {}
           displayGrant.id = grant.id
           displayGrant.author = grant.author
@@ -306,8 +319,6 @@ footer {
           displayGrant.institution = grant.institution
           displayGrant.programme = grant.programme
           displayGrant.amount = grant.amount
-          // you can now pass it to addGrantToTable
-          //console.log(displayGrant)
           addGrantToTable(displayGrant)
       }
   }
@@ -339,7 +350,7 @@ footer {
       showViewall()
       clearForm()
   }
-  // I should set this as the default function for the callback
+
   function doNothing(result){
       console.log("nothing:"+result)
       return "done"
@@ -347,7 +358,7 @@ footer {
 
     getAll(processGetAllResponse)
 
-
+// Grant Ajax calls
 function getAll(callback) {
     $.ajax({
         url: '/grants',
@@ -384,6 +395,250 @@ function deleteGrant(id, callback) {
         success: callback
     });
 }
+
+
+
+
+// Researcher Table
+  function showCreateResearcher(){
+      document.getElementById("createUpdateForm").style.display = "block"
+      document.getElementById("button-doCreate").style.display = "block"
+      document.getElementById("button-doUpdate").style.display = "none"
+      document.getElementById("createLabel").style.display = "inline"
+      document.getElementById("updateLabel").style.display = "none"
+      document.getElementById("button-showCreateResearcher").style.display = "none"
+      document.getElementById("researcherTable").style.display = "none"
+      
+  }
+  function showUpdateResearcher(buttonElement){
+      document.getElementById("createUpdateForm").style.display = "block"
+      document.getElementById("button-doCreate").style.display = "none"
+      document.getElementById("button-doUpdate").style.display = "block"
+      document.getElementById("createLabel").style.display = "none"
+      document.getElementById("updateLabel").style.display = "inline"
+      document.getElementById("button-showCreateResearcher").style.display = "none"
+      document.getElementById("researcherTable").style.display = "none"
+
+      rowElement= buttonElement.parentNode.parentNode
+      researcher = getResearcherFromRow(rowElement)
+      populateFormWithResearcher(researcher)
+      
+  }
+
+  function showViewall(){
+      document.getElementById("createUpdateForm").style.display = "none"
+      document.getElementById("button-showCreateResearcher").style.display = "block"
+      document.getElementById("researcherTable").style.display = "block"
+      
+  }
+  function clearForm(){
+      var form = document.getElementById('createUpdateForm')
+      form.querySelector('input[name="id"]').disabled = false
+      form.querySelector('input[name="id"]').value  =''
+      form.querySelector('input[name="title"]').value=''
+      form.querySelector('input[name="author"]').value=''
+      form.querySelector('input[name="year"]').value=''
+      form.querySelector('input[name="institution"]').value=''
+      form.querySelector('input[name="programme"]').value=''
+      form.querySelector('input[name="amount"]').value=''
+  }
+  
+  function getResearcherFromForm(){
+      var form = document.getElementById('createUpdateForm')
+      var researcher = {}
+    researcher.id = form.querySelector('input[name="id"]').value
+    researcher.title = form.querySelector('input[name="title"]').value
+    researcher.author = form.querySelector('input[name="author"]').value
+    researcher.year = form.querySelector('input[name="year"]').value
+    researcher.institution = form.querySelector('input[name="institution"]').value
+    researcher.programme = form.querySelector('input[name="programme"]').value
+    researcher.amount = form.querySelector('input[name="amount"]').value
+      return researcher
+  }
+  function populateFormWithResearcher(researcher){
+    var form = document.getElementById('createUpdateForm')
+    form.querySelector('input[name="id"]').disabled = true
+    form.querySelector('input[name="id"]').value  = researcher.id
+    form.querySelector('input[name="title"]').value= researcher.title
+    form.querySelector('input[name="author"]').value= researcher.author
+    form.querySelector('input[name="year"]').value= researcher.year
+    form.querySelector('input[name="institution"]').value= researcher.institution
+    form.querySelector('input[name="programme"]').value= researcher.programme
+    form.querySelector('input[name="amount"]').value= researcher.amount
+}
+
+
+  function addResearcherToTable(researcher){
+      var tableElement = document.getElementById('researcherTable')
+      var rowElement = tableElement.insertRow(-1)
+      
+      rowElement.setAttribute('id',researcher.id)
+      
+      var cell1 = rowElement.insertCell(0);
+      cell1.innerHTML = researcher.id
+      var cell2 = rowElement.insertCell(1);
+      cell2.innerHTML = researcher.title
+      var cell3 = rowElement.insertCell(2);
+      cell3.innerHTML = researcher.author
+      var cell3 = rowElement.insertCell(3);
+      cell3.innerHTML = researcher.year
+      var cell4 = rowElement.insertCell(4);
+      cell4.innerHTML = researcher.institution
+      var cell4 = rowElement.insertCell(5);
+      cell4.innerHTML = researcher.programme
+      var cell5= rowElement.insertCell(6);
+      cell5.innerHTML = researcher.amount
+      var cell6 = rowElement.insertCell(7);
+      cell6.innerHTML = '<button onclick="showUpdateResearcher(this)">Update</button>'
+      var cell7 = rowElement.insertCell(8);
+      cell7.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
+
+  }
+  function getResearcherFromRow(rowElement){
+      var researcher ={}
+      researcher.id  = rowElement.cells[0].firstChild.textContent
+      researcher.title = rowElement.cells[1].firstChild.textContent
+      researcher.author = rowElement.cells[2].firstChild.textContent
+      researcher.year = rowElement.cells[3].firstChild.textContent
+      researcher.institution = rowElement.cells[4].firstChild.textContent
+      researcher.programme = rowElement.cells[5].firstChild.textContent
+      researcher.amount = rowElement.cells[6].firstChild.textContent
+      return researcher
+  }
+  function setResearcherInRow(rowElement, researcher){
+      rowElement.cells[0].firstChild.textContent= researcher.id  
+      rowElement.cells[1].firstChild.textContent= researcher.title 
+      rowElement.cells[2].firstChild.textContent= researcher.author
+      rowElement.cells[3].firstChild.textContent= researcher.year
+      rowElement.cells[4].firstChild.textContent= researcher.institution
+      rowElement.cells[5].firstChild.textContent= researcher.programme
+      rowElement.cells[6].firstChild.textContent= researcher.amount
+}
+
+  function doCreate(){
+      console.log("creating a researcher")
+      researcher = getResearcherFromForm()
+      createResearcher(convertDisplayResearcherToServerResearcher(researcher), processCreateResponse)
+      console.log("About to create researcher:");
+      console.log(getResearcherFromForm());
+      console.log("Server payload:");
+      console.log(JSON.stringify(convertDisplayResearcherToServerResearcher(getResearcherFromForm())));
+  }
+
+  function doUpdate(){
+      researcher= getResearcherFromForm()
+      console.log(researcher)
+      var rowElement = document.getElementById(researcher.id)
+      setResearcherInRow(rowElement, researcher)
+      updateResearcher(convertDisplayResearcherToServerResearcher(researcher), doNothing)
+      showViewall()
+      clearForm()
+  }
+  function doDelete(buttonElement){
+      console.log("in delete")
+      var tableElement = document.getElementById('researcherTable')
+      var rowElement = buttonElement.parentNode.parentNode;
+      id = rowElement.getAttribute("id")
+      console.log("deleting "+id)
+      deleteResearcher(id, doNothing)
+
+      index = rowElement.rowIndex
+      tableElement.deleteRow(index);
+
+
+  }
+
+  function processGetAllResponseResearcher(result){
+      console.log("in process")
+      for (researcher of result){
+          displayResearcher = {}
+          displayResearcher.id = researcher.id
+          displayResearcher.author = researcher.author
+          displayResearcher.title = researcher.title
+          displayResearcher.year = researcher.year
+          displayResearcher.institution = researcher.institution
+          displayResearcher.programme = researcher.programme
+          displayResearcher.amount = researcher.amount
+          addResearcherToTable(displayResearcher)
+      }
+  }
+  function convertDisplayResearcherToServerResearcher(displayResearcher){
+      serverResearcher = {}
+      serverResearcher.id = displayResearcher.id
+      serverResearcher.title = displayResearcher.title
+      serverResearcher.author = displayResearcher.author
+      serverResearcher.year = displayResearcher.year
+      serverResearcher.institution = displayResearcher.institution
+      serverResearcher.programme = displayResearcher.programme
+      serverResearcher.amount = parseInt(displayResearcher.amount) // convert the string to an int
+      return serverResearcher
+  }
+  function convertServerResearcherToDisplayResearcher(researcher){
+      displayResearcher = {}
+      displayResearcher.id = researcher.id
+      displayResearcher.author = researcher.author
+      displayResearcher.title = researcher.title
+      displayResearcher.year = researcher.year
+      displayResearcher.institution = researcher.institution
+      displayResearcher.programme = researcher.programme
+      displayResearcher.amount = researcher.amount
+      return displayResearcher
+  }
+  function processCreateResponse(result){
+      displayResearcher = convertServerResearcherToDisplayResearcher(result)
+      addResearcherToTable(displayResearcher)
+      showViewall()
+      clearForm()
+  }
+
+  function doNothing(result){
+      console.log("nothing:"+result)
+      return "done"
+  }
+
+    getAllResearcher(processGetAllResponseResearcher)
+
+
+// Researcher Ajax calls
+
+function getAllResearcher(callback) {
+    $.ajax({
+        url: '/researcher',
+        method: 'GET',
+        dataType: 'json',
+        success: callback
+    });
+}
+
+function createResearcher(researcher, callback) {
+    $.ajax({
+        url: '/researcher',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(researcher),
+        success: callback
+    });
+}
+
+function updateResearcher(researcher, callback) {
+    $.ajax({
+        url: '/researcher/' + researcher.id,
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(researcher),
+        success: callback
+    });
+}
+
+function deleteResearcher(id, callback) {
+    $.ajax({
+        url: '/researcher/' + id,
+        method: 'DELETE',
+        success: callback
+    });
+}
+
+
 
 </script>
 

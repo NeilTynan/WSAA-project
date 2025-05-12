@@ -59,7 +59,7 @@ class grantDAO:
 
     def create(self, grant):
         cursor = self.getcursor()
-        sql="insert into funding (title, author, year=%s, institution, programme, amount) values (%s,%s,%s,%s,%s)"
+        sql="insert into funding (title, author, year, institution, programme, amount) values (%s,%s,%s,%s,%s,%s)"
         values = (grant.get("title"), grant.get("author"), grant.get("year"), grant.get("institution"), grant.get("programme"), grant.get("amount"))
         cursor.execute(sql, values)
 
@@ -103,7 +103,7 @@ class grantDAO:
         
 grantDAO = grantDAO()
 
-# gresearcherDAO
+# researcherDAO
 class researcherDAO:
     connection=""
     cursor =''
@@ -133,7 +133,7 @@ class researcherDAO:
         self.connection.close()
         self.cursor.close()
          
-    def getAll(self):
+    def getAllResearcher(self):
         cursor = self.getcursor()
         sql="select * from researcher"
         cursor.execute(sql)
@@ -142,45 +142,44 @@ class researcherDAO:
         #print(results)
         for result in results:
             #print(result)
-            returnArray.append(self.convertToDictionary(result))
+            returnArray.append(self.convertToDictionaryResearcher(result))
         
         self.closeAll()
         return returnArray
 
-    def findByID(self, id):
+    def findByIDResearcher(self, id):
         cursor = self.getcursor()
         sql="select * from researcher where id = %s"
         values = (id,)
 
         cursor.execute(sql, values)
         result = cursor.fetchone()
-        returnvalue = self.convertToDictionary(result)
+        returnvalue = self.convertToDictionaryResearcher(result)
         self.closeAll()
         return returnvalue
 
-    def create(self, grant):
+    def createResearcher(self, researcher):
         cursor = self.getcursor()
-        sql="insert into researcher (title, author, institution, programme, amount) values (%s,%s,%s,%s,%s)"
-        values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("programme"), grant.get("amount"))
+        sql="insert into researcher (title, author, year, institution, programme, amount) values (%s,%s,%s,%s,%s,%s)"
+        values = (researcher.get("title"), researcher.get("author"), researcher.get("year"), researcher.get("institution"), researcher.get("programme"), researcher.get("amount"))
         cursor.execute(sql, values)
 
         self.connection.commit()
         newid = cursor.lastrowid
-        grant["id"] = newid
+        researcher["id"] = newid
         self.closeAll()
-        return grant
+        return researcher
 
 
-    def update(self, id, grant):
+    def updateResearcher(self, id, researcher):
         cursor = self.getcursor()
-        sql="update researcher set title= %s,author=%s, institution=%s, programme=%s, amount=%s  where id = %s"
-        
-        values = (grant.get("title"), grant.get("author"), grant.get("institution"), grant.get("programme"), grant.get("amount"),id)
+        sql="update researcher set title= %s, author=%s, year=%s, institution=%s, programme=%s, amount=%s  where id = %s"
+        values = (researcher.get("title"), researcher.get("author"), researcher.get("year"), researcher.get("institution"), researcher.get("programme"), researcher.get("amount"),id)
         cursor.execute(sql, values)
         self.connection.commit()
         self.closeAll()
         
-    def delete(self, id):
+    def deleteResearcher(self, id):
         cursor = self.getcursor()
         sql="delete from researcher where id = %s"
         values = (id,)
@@ -192,8 +191,8 @@ class researcherDAO:
         
         print("delete done")
 
-    def convertToDictionary(self, resultLine):
-        attkeys=['id','title','author', 'institution', "programme", "amount"]
+    def convertToDictionaryResearcher(self, resultLine):
+        attkeys=['id', 'title', 'author', 'year', 'institution', "programme", "amount"]
         book = {}
         currentkey = 0
         for attrib in resultLine:
