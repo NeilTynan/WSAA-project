@@ -92,7 +92,7 @@ footer {
   <p>Here's the full list of the grants used by the comparison tool. The information below has been pulled from the old SFI grant commitments file <a href="https://data.gov.ie/dataset/science-foundation-ireland-grants-commitments/resource/1dda5892-aeff-4588-a94f-b548984d9340">SFI grant commitments file</a> hosted on data.gov.ie. 
     However, if you think it's missing a grant, feel free to add it by using the "Add a Grant" button below. Similarily, if you think any of the data is wrong, you can also update it using the "Update" and "Delete" buttons on the table.</p>
   <div><button id="button-showCreate" onclick="showCreate()">Add a Grant</button><br/><br/></div>
-  <h1>Grant Table</h1>
+  <h1>SFI Grant Table</h1>
   <div class="container">
     <table border="1" id="grantTable">
           <tr>
@@ -225,7 +225,7 @@ footer {
       cell5.innerHTML = grant.amount
       var cell6 = rowElement.insertCell(7);
       cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
-      var cell7 = rowElement.insertCell(9);
+      var cell7 = rowElement.insertCell(8);
       cell7.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
 
   }
@@ -390,7 +390,7 @@ function deleteGrant(id, callback) {
 </section>
 
 <footer>
-  <p>Footer</p>
+  <p>This website is a personal project. If you have any other questions, feel free to contact me at my github account (NeilTynan).</p>
 </footer>
 
 </body>
