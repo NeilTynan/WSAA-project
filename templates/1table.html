@@ -25,26 +25,10 @@ header {
 section {
   display:flex;
   flex-direction: row;
-}
-
-nav {
-  float: left;
-  width: 20%;
-  background: #ccc;
-  padding: 20px;
-}
-
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-article {
-  float: left;
-  padding: 20px;
-  width: 80%;
   background-color: #f1f1f1;
 }
+
+
 
 #grantTable th {
   background-color: #af7a73; /* Change this to your preferred color */
@@ -56,13 +40,22 @@ article {
 }
 
 #grantTable {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
 }
 
 #grantTable th, #grantTable td {
   padding: 8px;
   text-align: left;
+}
+
+.container {
+  max-height: 450px;  /* adjust height as needed */
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 section::after {
@@ -93,25 +86,20 @@ footer {
 </header>
 
 <section>
-  <nav>
-    <ul>
-      <h3>Navigation</h3>
-      <li><a href="#">Add/Update a Grant</a></li>
-      <li><a href="#">Analyse a Grant</a></li>
-    </ul>
-  </nav>
   
   <article>
   <h1>Grant Table</h1>
   <p>Here's the full list of the grants used by the comparison tool. The information below has been pulled from the old SFI grant commitments file <a href="https://data.gov.ie/dataset/science-foundation-ireland-grants-commitments/resource/1dda5892-aeff-4588-a94f-b548984d9340">SFI grant commitments file</a> hosted on data.gov.ie. 
     However, if you think it's missing a grant, feel free to add it by using the "Add a Grant" button below. Similarily, if you think any of the data is wrong, you can also update it using the "Update" and "Delete" buttons on the table.</p>
   <div><button id="button-showCreate" onclick="showCreate()">Add a Grant</button><br/><br/></div>
-  <div>
-      <table border="1" id="grantTable">
+  <h1>Grant Table</h1>
+  <div class="container">
+    <table border="1" id="grantTable">
           <tr>
                   <th>id</th>
                   <th>Title</th>
                   <th>Author</th>
+                  <th>Year</th>
                   <th>Institution</th>
                   <th>Programme</th>
                   <th>Amount</th>
@@ -127,6 +115,7 @@ footer {
       id <input type="text" name="id"><br/>
       Title <input type="text" name="title"><br/>
       Author <input type="text" name="author"><br/>
+      Institution <input type="text" name="institution"><br/>
       Institution <input type="text" name="institution"><br/>
       Programme <input type="text" name="programme"><br/>
       Amount <input type="number" name="amount"><br/>

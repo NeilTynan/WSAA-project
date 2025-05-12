@@ -27,6 +27,9 @@ def create_grant():
     if "author" not in jsonstring:
         abort(400)
     grant["author"] = jsonstring["author"]
+    if "year" not in jsonstring:
+        abort(400)
+    grant["year"] = jsonstring["year"]
     if "institution" not in jsonstring:
         abort(400)
     grant["institution"] = jsonstring["institution"]
@@ -48,6 +51,8 @@ def update_grant(id):
         grant["title"] = jsonstring["title"]
     if "author" in jsonstring:
         grant["author"] = jsonstring["author"]
+    if "year" in jsonstring:
+        grant["year"] = jsonstring["year"]
     if "institution" in jsonstring:
         grant["institution"] = jsonstring["institution"]
     if "programme" in jsonstring:

@@ -3,10 +3,10 @@ import mysql.connector
 
 
 df = pd.read_csv("opendata.csv", encoding='ISO-8859-1')
+df['year'] = pd.to_datetime(df['Start Date'], format='%d/%m/%Y').dt.year
 
-
-df = df[['Proposal Title', 'Lead Applicant', 'Research Body', 'Programme Name', ' Current Total Commitment ']]
-df.columns = ['title', 'author', 'institution', 'programme', 'amount']
+df = df[['Proposal Title', 'Lead Applicant', 'year', 'Research Body', 'Programme Name', ' Current Total Commitment ']]
+df.columns = ['title', 'author', 'year', 'institution', 'programme', 'amount']
 
 
 conn = mysql.connector.connect(
@@ -19,8 +19,8 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 for index, row in df.iterrows():
-    sql = "INSERT INTO funding (title, author, institution, programme, amount) VALUES (%s, %s, %s, %s, %s)"
-    values = (row['title'], row['author'], row['institution'], row['programme'], row['amount']) 
+    sql = "INSERT INTO funding (title, author, year, institution, programme, amount) VALUES (%s, %s, %s, %s, %s, %s)"
+    values = (row['title'], row['author'], row['year'], row['institution'], row['programme'], row['amount']) 
     cursor.execute(sql, values)
 
 conn.commit()
