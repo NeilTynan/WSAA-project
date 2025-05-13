@@ -168,65 +168,65 @@ class researcherDAO:
 
 # Comparison functions
 
-def compareResearcherAmount(self, researcher_id):
-    cursor = self.getcursor()
+    def compareResearcherAmount(self, id):
+        cursor = self.getcursor()
 
-    sql_res = "select amount, year, institution, programme from researcher WHERE id = %s"
-    cursor.execute(sql_res, (researcher_id,))
-    researcher = cursor.fetchone()
-    amount = researcher[0]
-    year = researcher[1]
-    institution = researcher[2]
-    programme = researcher[3]
+        sql_res = "select amount, year, institution, programme from researcher where id = %s"
+        cursor.execute(sql_res, (id,))
+        researcher = cursor.fetchone()
+        res_amount = researcher[0]
+        year = researcher[1]
+        institution = researcher[2]
+        programme = researcher[3]
 
-    overall_avg = "select avg(amount) from funding"
-    cursor.execute(overall_avg, (amount,))
-    avg_funding = cursor.fetchone()
-    avg_overall = avg_funding[0]
+        overall_amount = "select avg(amount) from funding"
+        cursor.execute(overall_amount)
+        avg_funding = cursor.fetchone()
+        avg_overall = avg_funding[0]
 
-    overall_year = "select avg(amount) from funding where year = %s"
-    cursor.execute(overall_year, (year,))
-    year_result = cursor.fetchone()
-    year_avg = year_result[0]
+        overall_year = "select avg(amount) from funding where year = %s"
+        cursor.execute(overall_year, (year,))
+        year_result = cursor.fetchone()
+        year_avg = year_result[0]
 
-    overall_inst = "select avg(amount) from funding where institution = %s"
-    cursor.execute(overall_inst, (institution,))
-    inst_result = cursor.fetchone()
-    inst_avg = inst_result[0]
+        overall_inst = "select avg(amount) from funding where institution = %s"
+        cursor.execute(overall_inst, (institution,))
+        inst_result = cursor.fetchone()
+        inst_avg = inst_result[0]
 
-    overall_prog = "select avg(amount) from funding where programme = %s"
-    cursor.execute(overall_prog, (programme,))
-    prog_result = cursor.fetchone()
-    prog_avg = prog_result[0]
+        overall_prog = "select avg(amount) from funding where programme = %s"
+        cursor.execute(overall_prog, (programme,))
+        prog_result = cursor.fetchone()
+        prog_avg = prog_result[0]
 
-    comparison_overall = "above average" if res_amount > avg_overall else (
-        "below average" if res_amount < avg_overall else "equal to average"
-    )
-    
-    comparison_year = "above average" if res_amount > year_avg else (
-        "below average" if res_amount < year_avg else "equal to average"
-    )
+        comparison_overall = "above average" if res_amount > avg_overall else (
+            "below average" if res_amount < avg_overall else "equal to average"
+        )
+        
+        comparison_year = "above average" if res_amount > year_avg else (
+            "below average" if res_amount < year_avg else "equal to average"
+        )
 
-    comparison_institution = "above average" if res_amount > inst_avg else (
-        "below average" if res_amount < inst_avg else "equal to average"
-    )
+        comparison_institution = "above average" if res_amount > inst_avg else (
+            "below average" if res_amount < inst_avg else "equal to average"
+        )
 
-    comparison_programme = "above average" if res_amount > prog_avg else (
-        "below average" if res_amount < prog_avg else "equal to average"
-    )
+        comparison_programme = "above average" if res_amount > prog_avg else (
+            "below average" if res_amount < prog_avg else "equal to average"
+        )
 
-    self.closeAll()
-    
-    return {
-        'researcher_amount': res_amount,
-        'average_grant_amount': avg_overall,
-        'year_average': year_avg,
-        'institution_average': inst_avg,
-        'programme_average': prog_avg,
-        'comparison_overall': comparison_overall,
-        'comparison_year': comparison_year,
-        'comparison_institution': comparison_institution,
-        'comparison_programme': comparison_programme
+        self.closeAll()
+        
+        return {
+            'researcher_amount': res_amount,
+            'average_grant_amount': avg_overall,
+            'year_average': year_avg,
+            'institution_average': inst_avg,
+            'programme_average': prog_avg,
+            'comparison_overall': comparison_overall,
+            'comparison_year': comparison_year,
+            'comparison_institution': comparison_institution,
+            'comparison_programme': comparison_programme
     }
 
 
