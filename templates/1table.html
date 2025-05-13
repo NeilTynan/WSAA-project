@@ -420,13 +420,14 @@ function comparison(researcherId) {
         method: 'GET',
         success: function(data) {
             $('#comparison').html(
-              '<strong>Researcher Grant Analysis</strong><br>' +
-              'Overall: ' + data.comparison_overall + ' (Researcher: €' + data.researcher_amount + ', Avg: €' + data.average_grant_amount + ')<br>' +
-              'Year: ' + data.comparison_year + ' (Avg: €' + data.year_average + ')<br>' +
-              'Institution: ' + data.comparison_institution + ' (Avg: €' + data.institution_average + ')<br>' +
-              'Programme: ' + data.comparison_programme + ' (Avg: €' + data.programme_average + ')'
-            );
+              '<h3>Researcher Grant Analysis</h3>' +
+              'This grant was ' + data.comparison_overall + ' than the overall average SFI grant awarded (€'+ data.average_grant_amount +')<br>' +
+              'In the year this grant was awarded, it was ' + data.comparison_year + ' than the average SFI grant awarded (€'+ data.year_average+')<br>'+
+              'When it comes to grants awarded to this instituions this grant was ' + data.comparison_institution + ' than the average SFI grant awarded (€'+ data.institution_average +')<br>'+
+              'Compared to the average grant in this programme, this grant was ' + data.comparison_programme + ' than average SFI grant awarded (€' + data.programme_average +')<br>'         
+              );
           },
+
         error: function() {
             $('#comparison').text('No researcher ID match.');
         }

@@ -199,30 +199,30 @@ class researcherDAO:
         prog_result = cursor.fetchone()
         prog_avg = prog_result[0]
 
-        comparison_overall = "above average" if res_amount > avg_overall else (
-            "below average" if res_amount < avg_overall else "equal to average"
+        comparison_overall = "larger" if res_amount > avg_overall else (
+            "smaller" if res_amount < avg_overall else "equal"
         )
         
-        comparison_year = "above average" if res_amount > year_avg else (
-            "below average" if res_amount < year_avg else "equal to average"
+        comparison_year = "larger" if res_amount > year_avg else (
+            "smaller" if res_amount < year_avg else "equal"
         )
 
-        comparison_institution = "above average" if res_amount > inst_avg else (
-            "below average" if res_amount < inst_avg else "equal to average"
+        comparison_institution = "larger" if res_amount > inst_avg else (
+            "smaller" if res_amount < inst_avg else "equal"
         )
 
-        comparison_programme = "above average" if res_amount > prog_avg else (
-            "below average" if res_amount < prog_avg else "equal to average"
+        comparison_programme = "larger" if res_amount > prog_avg else (
+            "smaller" if res_amount < prog_avg else "equal"
         )
 
         self.closeAll()
         
         return {
             'researcher_amount': res_amount,
-            'average_grant_amount': avg_overall,
-            'year_average': year_avg,
-            'institution_average': inst_avg,
-            'programme_average': prog_avg,
+            'average_grant_amount': round(avg_overall, 2),
+            'year_average': round(year_avg, 2),
+            'institution_average': round(inst_avg, 2),
+            'programme_average': round(prog_avg, 2),
             'comparison_overall': comparison_overall,
             'comparison_year': comparison_year,
             'comparison_institution': comparison_institution,
