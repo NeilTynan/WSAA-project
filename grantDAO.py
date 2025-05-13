@@ -31,7 +31,7 @@ class grantDAO:
     def closeAll(self):
         self.connection.close()
         self.cursor.close()
-         
+
     def getAll(self):
         cursor = self.getcursor()
         sql="select * from funding"
@@ -45,26 +45,15 @@ class grantDAO:
         
         self.closeAll()
         return returnArray
-
-    def findByID(self, id):
-        cursor = self.getcursor()
-        sql="select * from funding where id = %s"
-        values = (id,)
-
-        cursor.execute(sql, values)
-        result = cursor.fetchone()
-        returnvalue = self.convertToDictionary(result)
-        self.closeAll()
-        return returnvalue
     
     def convertToDictionary(self, resultLine):
         attkeys=['id','title','author','year', 'institution', "programme", "amount"]
-        book = {}
+        grant = {}
         currentkey = 0
         for attrib in resultLine:
-            book[attkeys[currentkey]] = attrib
+            grant[attkeys[currentkey]] = attrib
             currentkey = currentkey + 1 
-        return book
+        return grant
 
         
 grantDAO = grantDAO()
@@ -98,7 +87,7 @@ class researcherDAO:
     def closeAll(self):
         self.connection.close()
         self.cursor.close()
-         
+
     def getAllResearcher(self):
         cursor = self.getcursor()
         sql="select * from researcher"
@@ -159,45 +148,47 @@ class researcherDAO:
 
     def convertToDictionaryResearcher(self, resultLine):
         attkeys=['id', 'title', 'author', 'year', 'institution', "programme", "amount"]
-        book = {}
+        researcher = {}
         currentkey = 0
         for attrib in resultLine:
-            book[attkeys[currentkey]] = attrib
+            researcher[attkeys[currentkey]] = attrib
             currentkey = currentkey + 1 
-        return book
+        return researcher
 
 # Comparison functions
 
     def compareResearcherAmount(self, id):
         cursor = self.getcursor()
 
-        sql_res = "select amount, year, institution, programme from researcher where id = %s"
+        sql_res = "select title, author, year, institution, programme, amount from researcher where id = %s"
         cursor.execute(sql_res, (id,))
         researcher = cursor.fetchone()
-        res_amount = researcher[0]
-        year = researcher[1]
-        institution = researcher[2]
-        programme = researcher[3]
+        title = researcher[0]
+        author = researcher[1]
+        year = researcher[2]
+        institution = researcher[3]
+        programme = researcher[4]
+        res_amount = researcher[5]
 
         overall_amount = "select avg(amount) from funding"
         cursor.execute(overall_amount)
         avg_funding = cursor.fetchone()
-        avg_overall = avg_funding[0]
+        avg_overall = avg_funding[0] if avg_funding and avg_funding[0] is not None else 0
 
         overall_year = "select avg(amount) from funding where year = %s"
         cursor.execute(overall_year, (year,))
         year_result = cursor.fetchone()
-        year_avg = year_result[0]
+        year_avg = year_result[0] if year_result and year_result[0] is not None else 0
 
         overall_inst = "select avg(amount) from funding where institution = %s"
         cursor.execute(overall_inst, (institution,))
         inst_result = cursor.fetchone()
-        inst_avg = inst_result[0]
+        inst_avg = inst_result[0] if inst_result and inst_result[0] is not None else 0
 
         overall_prog = "select avg(amount) from funding where programme = %s"
         cursor.execute(overall_prog, (programme,))
         prog_result = cursor.fetchone()
-        prog_avg = prog_result[0]
+        prog_avg = prog_result[0] if prog_result and prog_result[0] is not None else 0
 
         comparison_overall = "larger" if res_amount > avg_overall else (
             "smaller" if res_amount < avg_overall else "equal"
@@ -218,6 +209,13 @@ class researcherDAO:
         self.closeAll()
         
         return {
+            'researcher': researcher,
+            'title': title,
+            'author': author,
+            'year': year,
+            'institution': institution,
+            'programme': programme,
+            'amount': res_amount,
             'researcher_amount': res_amount,
             'average_grant_amount': round(avg_overall, 2),
             'year_average': round(year_avg, 2),
@@ -229,6 +227,4 @@ class researcherDAO:
             'comparison_programme': comparison_programme
     }
 
-
-        
 researcherDAO = researcherDAO()

@@ -19,7 +19,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 
 for index, row in df.iterrows():
-    sql = "INSERT INTO funding (title, author, year, institution, programme, amount) VALUES (%s, %s, %s, %s, %s, %s)"
+    sql = "insert into researcher (title, author, year, institution, programme, amount) values (%s, %s, %s, %s, %s, %s)"
     values = (row['title'], row['author'], row['year'], row['institution'], row['programme'], row['amount']) 
     cursor.execute(sql, values)
 

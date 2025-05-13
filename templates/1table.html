@@ -26,6 +26,8 @@ section {
   display:flex;
   flex-direction: row;
   background-color: #f1f1f1;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 #researcherTable th {
@@ -38,7 +40,7 @@ section {
 }
 
 #researcherTable {
-  width: 90%;
+  width: 100%;
   border-collapse: collapse;
 }
 
@@ -66,7 +68,7 @@ section {
 }
 
 #grantTable {
-  width: 90%;
+  width: 100%;
   border-collapse: collapse;
 }
 
@@ -108,12 +110,20 @@ footer {
 <body>
 
 <header>
-  <h2>Grant Comparator</h2>
+  <h2>SFI Grant Comparator</h2>
 </header>
 
 <section>
-  
   <article>
+  <br/>
+  <p> Welcome to the SFI grant comparator web application. This web application allows you to look at an individual SFI grant and see how it compares to the overall SFI averages.
+  Just select an SFI grant from the researcher table below, enter it's id number in the box below and click the compare button. The application will then generate some text to
+  show you how your grant compares to the overall SFI averages.</p>
+  <p> Alternatively, if you'd like, you can add your own grant to the table below and use the assigned id number to see how it compares to the overall SFI averages. 
+  Though, if you are entering your own grant, you should be aware if you enter a value not contained in the comparison table, it wll return a "0" for your comparisons. 
+  The data in the comparison table is largely the same as the data in the grant table, so, if you need to see the exact way to spell UCD, you can look at the table below.</p>
+  <p></p>Don't worry, the compartor uses the original data from the from the old <a href="https://data.gov.ie/dataset/science-foundation-ireland-grants-commitments/resource/1dda5892-aeff-4588-a94f-b548984d9340">SFI grant commitments file</a> 
+  to work out it's averages. So, adding your grant to the table below won't impact how well the application does its analysis.</p>  
   <br/>
   <form id="compareForm">
     <label for="researcherId">Enter Researcher ID:</label>
@@ -124,7 +134,7 @@ footer {
 
   <h1>Add A Grant</h1>
   <div><button id="button-showCreateResearcher" onclick="showCreateResearcher()">Add a Grant</button><br/><br/></div>
-  <h1>Researcher Table</h1>
+  <h1>Grant Table</h1>
   <div class="container">
     <table border="1" id="researcherTable">
           <tr>
@@ -141,9 +151,6 @@ footer {
   </table>
   <br/>
   </div>
-  <p>Here's the full list of the grants used by the comparison tool. The information below has been pulled from the old SFI grant commitments file <a href="https://data.gov.ie/dataset/science-foundation-ireland-grants-commitments/resource/1dda5892-aeff-4588-a94f-b548984d9340">SFI grant commitments file</a> hosted on data.gov.ie. 
-    However, if you think it's missing a grant, feel free to add it by using the "Add a Grant" button below. Similarily, if you think any of the data is wrong, you can also update it using the "Update" and "Delete" buttons on the table.</p>
-
   <br/>
   </div>
   <div id="createUpdateForm" style="display:none">
@@ -192,7 +199,7 @@ footer {
       document.getElementById("createUpdateForm").style.display = "none"
       document.getElementById("button-showCreateResearcher").style.display = "block"
       document.getElementById("researcherTable").style.display = "block"
-      
+
   }
   function clearForm(){
       var form = document.getElementById('createUpdateForm')
@@ -402,6 +409,7 @@ function deleteResearcher(id, callback) {
 }
 
 
+
 // Comparison functions
 
 // Chatgpt - Why is this comparison button not working?
@@ -421,10 +429,11 @@ function comparison(researcherId) {
         success: function(data) {
             $('#comparison').html(
               '<h3>Researcher Grant Analysis</h3>' +
-              'This grant was ' + data.comparison_overall + ' than the overall average SFI grant awarded (€'+ data.average_grant_amount +')<br>' +
-              'In the year this grant was awarded, it was ' + data.comparison_year + ' than the average SFI grant awarded (€'+ data.year_average+')<br>'+
-              'When it comes to grants awarded to this instituions this grant was ' + data.comparison_institution + ' than the average SFI grant awarded (€'+ data.institution_average +')<br>'+
-              'Compared to the average grant in this programme, this grant was ' + data.comparison_programme + ' than average SFI grant awarded (€' + data.programme_average +')<br>'         
+              'You have selected the grant "' + data.title + '" by ' + data.author + '. This grant was awarded in ' + data.year + ' under the ' + data.programme + ' while the awardee was working in ' +  data.institution + '. The total funding was €' + data.amount + '.<br><br>' +
+              '- This grant is <strong>' + data.comparison_overall + '</strong> than the current overall average SFI grant awarded (€'+ data.average_grant_amount +')<br>' +
+              '- In '  + data.year + ' this grant was <strong>' + data.comparison_year + '</strong> than the average SFI grant awarded (€'+ data.year_average+')<br>'+
+              '- When it comes to grants awarded to '  + data.institution + ', this grant is <strong>' + data.comparison_institution + '</strong> than the average SFI grant awarded (€'+ data.institution_average +')<br>'+
+              '- Compared to the average grant in the '  + data.programme + ', this grant was <strong>' + data.comparison_programme + '</strong> than average (€' + data.programme_average +')<br>'         
               );
           },
 
