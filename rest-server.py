@@ -125,6 +125,13 @@ def update_researcher(id):
 def delete_researcher(id):
     return jsonify(researcherDAO.deleteResearcher(id))
 
+# Comparison functions
+
+@app.route('/compare/<int:id>')
+def compare(id):
+    result = researcherDAO.compareResearcherAmount(id)
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
