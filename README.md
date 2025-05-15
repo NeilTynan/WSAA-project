@@ -53,7 +53,9 @@ To understand how the workbook has developped to date, please see below a timeli
     + Updated the html to improve formating of the actual web page, removing now redundent elements such as the nav section. Added in a text section explain how the interface works and how to use it.
     + With the move towards drawing much of the comparator data directly from the sql database it became apparent that the first table ("grants") was now largerly redundent in the final design. Consequently, most references to it were removed from the html, DAO and rest-server files. 
 - 14/05/2025 - Restarted work on hosting the server on pythonanywhere. Internal material referenced: WSAA10.1-pythonanywhere. External material referenced:
-- 15/05/2025 - Continued work on hosting.
+- 15/05/2025 - Removed remaining references to grants table from grantDAO.py and rest_server.py. Also continued work on hosting. Tasks involved in this include:
+    + Added "dbconfigpa.py" to allow the rest_server file on the pythonanywhere virtual machine to connect to the pythonanywhere sql server.
+    + Added "sfipa.py" to faciliate the upload of "opendata.csv" to the sql server on python anywhere.
 
 ## Getting help
 
