@@ -31,6 +31,7 @@ To understand how the workbook has developped to date, please see below a timeli
 - 03/04/2025 - Set up flask server. Course material referenced: WSAA6.5 REST for project
 - 07/04/2025 - Added CRUD operators for flask server. Course material referenced: WSAA6.5 REST for project
 - 08/04/2025 - Added in "grantsviewer.html" file to serve as the basis of the main webpage. Internal materials referenced: WSAA09.05 look at sample
+- 09/04/2025 - Replaced "grantsviewer.html" with three new html files ("1table.htlm", c). External material referenced: https://www.w3schools.com/howto/howto_make_a_website.asp (setting up and formating a html page).
 - 25/04/2025 - Added a "requirements.txt" file. Start work on hosting the web application on pythonanywhere.
 - 27/04/2025 - Continued work on trying to set up hosting for the web application.
 - 08/05/2025 - Continued work on hosting but ultimately decided to wait until the web application was fully designed before proceeding any further.
@@ -46,12 +47,13 @@ To understand how the workbook has developped to date, please see below a timeli
     + Added in "sfi.py" and "opendata.csv". The former to facilitate the populating the sql table with the data in the later.
     + Completed work on adding in the second ("researcher") table.
     + Started work on comparator function to allow for data from "researcher" to be matched against averages drawn from "grant".
-    + Deleted "2.html" and "3.html" as it became apparent that their functions could be embedded into the primary html file without much loss of useability.
+    + Deleted "2analysis.html" and "3FAQ.html" as it became apparent that their functions could be embedded into the primary html file without much loss of useability.
 - 13/05/2025 - Completed much of the work on the interface. Tasks involved in this included:
     + Finalised work on the comparator function, which was adjusted to do most of the comparison work at the sql level as opposed to using CRUD calls to do the comparison.
     + Updated the html to improve formating of the actual web page, removing now redundent elements such as the nav section. Added in a text section explain how the interface works and how to use it.
     + With the move towards drawing much of the comparator data directly from the sql database it became apparent that the first table ("grants") was now largerly redundent in the final design. Consequently, most references to it were removed from the html, DAO and rest-server files. 
-- 14/05/2025 - Restarted work on hosting the server on pythonanywhere.
+- 14/05/2025 - Restarted work on hosting the server on pythonanywhere. Internal material referenced: WSAA10.1-pythonanywhere. External material referenced:
+- 15/05/2025 - Continued work on hosting.
 
 ## Getting help
 

@@ -1,7 +1,6 @@
 import pandas as pd
 import mysql.connector
-import dbconfig as cfg
-
+import dbconfigpa as cfg
 
 df = pd.read_csv("opendata.csv", encoding='ISO-8859-1')
 df['year'] = pd.to_datetime(df['Start Date'], format='%d/%m/%Y').dt.year
@@ -24,6 +23,6 @@ for index, row in df.iterrows():
     values = (row['title'], row['author'], row['year'], row['institution'], row['programme'], row['amount']) 
     cursor.execute(sql, values)
 
-self.commit()
+conn.commit()
 cursor.close()
-self.close()
+conn.close()
