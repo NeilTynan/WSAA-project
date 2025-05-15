@@ -246,4 +246,5 @@ $RECYCLE.BIN/
 .nfs*
 
 # my configuration files
-config.py
+dbconfig.py
+dbconfigpa.py
