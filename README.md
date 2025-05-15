@@ -10,10 +10,10 @@ Link to web application:
 This repository contains my weekly assignments for ATU module 8640 -- WEB SERVICES AND APPLICATIONS. It contains the project work for the course, which is focused on the construction of a REST API which will display information related to the old SFI grant comitments file. The intentions is this API will have a numer of features:
 
 1. An accompanying web interface, using AJAX calls, to perform CRUD operations. 
-2. Save the data into a database table that you view elsewhere in your application 
-3. The ability to analyse the data in realtime.
-4. Will be hosted online via PythonAnywhere.
-5. Manipulate/analyse the data in real time.
+2. The capacity to save data into a database table that cane be viewied elsewhere in the application 
+3. It will interact with two database tables.
+4. User will be able to analyse some of the data in realtime.
+5. It will be hosted online, via PythonAnywhere.
 
 Note on the grant table.
 
@@ -51,7 +51,7 @@ To understand how the workbook has developped to date, please see below a timeli
     + Finalised work on the comparator function, which was adjusted to do most of the comparison work at the sql level as opposed to using CRUD calls to do the comparison.
     + Updated the html to improve formating of the actual web page, removing now redundent elements such as the nav section. Added in a text section explain how the interface works and how to use it.
     + With the move towards drawing much of the comparator data directly from the sql database it became apparent that the first table ("grants") was now largerly redundent in the final design. Consequently, most references to it were removed from the html, DAO and rest-server files. 
-- 14/05/2025 - 
+- 14/05/2025 - Restarted work on hosting the server on pythonanywhere.
 
 ## Getting help
 
