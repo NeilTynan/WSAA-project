@@ -8,7 +8,7 @@ df['year'] = pd.to_datetime(df['Start Date'], format='%d/%m/%Y').dt.year
 
 df = df[['Proposal Title', 'Lead Applicant', 'year', 'Research Body', 'Programme Name', ' Current Total Commitment ']]
 df.columns = ['title', 'author', 'year', 'institution', 'programme', 'amount']
-
+df = df.where(pd.notnull(df), None)
 
 conn = mysql.connector.connect(
     host=cfg.mysql['host'],
