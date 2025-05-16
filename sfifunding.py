@@ -24,6 +24,6 @@ for index, row in df.iterrows():
     values = (row['title'], row['author'], row['year'], row['institution'], row['programme'], row['amount']) 
     cursor.execute(sql, values)
 
-self.commit()
+conn.commit()
 cursor.close()
-self.close()
+conn.close()
