@@ -2,5 +2,5 @@ mysql = {
     'host': 'atuntynan.mysql.pythonanywhere-services.com',
     'user': 'atuntynan',
     'password': 'Perlia.M41',
-    'database': 'atuntynan$wsaa'
+    'database': 'atuntynan$default'
 }
