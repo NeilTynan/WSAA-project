@@ -10,9 +10,9 @@ Link to web application: [https://atuntynan.pythonanywhere.com/](https://atuntyn
 This repository contains my weekly assignments for ATU module 8640 -- WEB SERVICES AND APPLICATIONS. It contains the project work for the course, which is focused on the construction of a REST API which will display information related to the old SFI grant comitments file. The intentions is this API will have a numer of features:
 
 1. An accompanying web interface, using AJAX calls, to perform CRUD operations. 
-2. The capacity to save data into a database table that cane be viewied elsewhere in the application 
+2. The capacity to save data into a database table that can be viewied elsewhere in the application 
 3. It will interact with two database tables.
-4. User will be able to analyse some of the data in realtime.
+4. User will be able to analyse some of the data in real time.
 5. It will be hosted online, via PythonAnywhere.
 
 Note on the grant table.
