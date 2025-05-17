@@ -5,6 +5,8 @@
 <title>CSS Template</title> 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 <style>
 * {
   box-sizing: border-box;
@@ -31,12 +33,12 @@ section {
 }
 
 #researcherTable th {
-  background-color: #af7a73; /* Change this to your preferred color */
-  color: white; /* Optional: Changes text color to white for contrast */
+  background-color: #af7a73; 
+  color: white; 
 }
 
 #researcherTable td {
-  background-color: #f9f9f9; /* Optional: Sets a different color for table rows */
+  background-color: #f9f9f9; 
 }
 
 #researcherTable {
@@ -50,7 +52,7 @@ section {
 }
 
 .container {
-  max-height: 300px;  /* adjust height as needed */
+  max-height: 300px;  
   overflow-y: auto;
   overflow-x: auto;
   border: 1px solid #ddd;
@@ -59,12 +61,12 @@ section {
 }
 
 #grantTable th {
-  background-color: #af7a73; /* Change this to your preferred color */
-  color: white; /* Optional: Changes text color to white for contrast */
+  background-color: #af7a73; 
+  color: white; 
 }
 
 #grantTable td {
-  background-color: #f9f9f9; /* Optional: Sets a different color for table rows */
+  background-color: #f9f9f9; 
 }
 
 #grantTable {
@@ -78,7 +80,7 @@ section {
 }
 
 .container {
-  max-height: 300px;  /* adjust height as needed */
+  max-height: 300px;  
   overflow-y: auto;
   overflow-x: auto;
   border: 1px solid #ddd;
@@ -169,17 +171,18 @@ footer {
 </body>
 <script>
 
-// Researcher Table
+// Makes the form to create a new researcher visible
   function showCreateResearcher(){
-      document.getElementById("createUpdateForm").style.display = "block"
+      document.getElementById("createUpdateForm").style.display = "block" // Finds the element CreateUpdateForm and makes it visible
       document.getElementById("button-doCreateResearcher").style.display = "block"
       document.getElementById("button-doUpdateResearcher").style.display = "none"
       document.getElementById("createLabel").style.display = "inline"
       document.getElementById("updateLabel").style.display = "none"
       document.getElementById("button-showCreateResearcher").style.display = "none"
       document.getElementById("researcherTable").style.display = "none"
-      
   }
+
+// Brings up the update form like the above section does for the create form
   function showUpdateResearcher(buttonElement){
       document.getElementById("createUpdateForm").style.display = "block"
       document.getElementById("button-doCreateResearcher").style.display = "none"
@@ -188,23 +191,23 @@ footer {
       document.getElementById("updateLabel").style.display = "inline"
       document.getElementById("button-showCreateResearcher").style.display = "none"
       document.getElementById("researcherTable").style.display = "none"
-
       rowElement= buttonElement.parentNode.parentNode
       researcher = getResearcherFromRow(rowElement)
       populateFormWithResearcher(researcher)
-      
   }
 
+// Hides the form and shows the table
   function showViewall(){
       document.getElementById("createUpdateForm").style.display = "none"
       document.getElementById("button-showCreateResearcher").style.display = "block"
       document.getElementById("researcherTable").style.display = "block"
-
   }
+
+// Makes all the inputs in the form blank
   function clearForm(){
       var form = document.getElementById('createUpdateForm')
-      form.querySelector('input[name="id"]').disabled = false
-      form.querySelector('input[name="id"]').value  =''
+      form.querySelector('input[name="id"]').disabled = false 
+      form.querySelector('input[name="id"]').value  ='' // finds the id input and makes it blank
       form.querySelector('input[name="title"]').value=''
       form.querySelector('input[name="author"]').value=''
       form.querySelector('input[name="year"]').value=''
@@ -212,7 +215,7 @@ footer {
       form.querySelector('input[name="programme"]').value=''
       form.querySelector('input[name="amount"]').value=''
   }
-  
+
   function getResearcherFromForm(){
       var form = document.getElementById('createUpdateForm')
       var researcher = {}
@@ -225,9 +228,11 @@ footer {
     researcher.amount = form.querySelector('input[name="amount"]').value
       return researcher
   }
+
+// Populates the form with the results of the update
   function populateFormWithResearcher(researcher){
     var form = document.getElementById('createUpdateForm')
-    form.querySelector('input[name="id"]').disabled = true
+    form.querySelector('input[name="id"]').disabled = true // Preventsthe id from being changed
     form.querySelector('input[name="id"]').value  = researcher.id
     form.querySelector('input[name="title"]').value= researcher.title
     form.querySelector('input[name="author"]').value= researcher.author
@@ -237,14 +242,12 @@ footer {
     form.querySelector('input[name="amount"]').value= researcher.amount
 }
 
-
+// Adds a new row to the table with the results
   function addResearcherToTable(researcher){
       var tableElement = document.getElementById('researcherTable')
       var rowElement = tableElement.insertRow(-1)
-      
       rowElement.setAttribute('id',researcher.id)
-      
-      var cell1 = rowElement.insertCell(0);
+      var cell1 = rowElement.insertCell(0); // Enters the below variable into the the selected cell in the selected table row
       cell1.innerHTML = researcher.id
       var cell2 = rowElement.insertCell(1);
       cell2.innerHTML = researcher.title
@@ -262,11 +265,12 @@ footer {
       cell6.innerHTML = '<button onclick=showUpdateResearcher(this)>Update</button>'
       var cell7 = rowElement.insertCell(8);
       cell7.innerHTML = '<button onclick=doDelete(this)>Delete</button>'
-
   }
+
+// Selects the row and data that is to be updated/deleted
   function getResearcherFromRow(rowElement){
       var researcher ={}
-      researcher.id  = rowElement.cells[0].firstChild.textContent
+      researcher.id  = rowElement.cells[0].firstChild.textContent // selects the content inside a cell in a table row
       researcher.title = rowElement.cells[1].firstChild.textContent
       researcher.author = rowElement.cells[2].firstChild.textContent
       researcher.year = rowElement.cells[3].firstChild.textContent
@@ -275,6 +279,8 @@ footer {
       researcher.amount = rowElement.cells[6].firstChild.textContent
       return researcher
   }
+
+// Updates the row after it's been selected
   function setResearcherInRow(rowElement, researcher){
       rowElement.cells[0].firstChild.textContent= researcher.id  
       rowElement.cells[1].firstChild.textContent= researcher.title 
@@ -283,8 +289,9 @@ footer {
       rowElement.cells[4].firstChild.textContent= researcher.institution
       rowElement.cells[5].firstChild.textContent= researcher.programme
       rowElement.cells[6].firstChild.textContent= researcher.amount
-}
+  }
 
+// Saves the data from a newly created entry in the researcher table to the server database  
   function doCreateResearcher(){
       console.log("creating a researcher")
       researcher = getResearcherFromForm()
@@ -295,6 +302,7 @@ footer {
       console.log(JSON.stringify(convertDisplayResearcherToServerResearcher(getResearcherFromForm())));
   }
 
+// Same as above but for update
   function doUpdateResearcher(){
       researcher= getResearcherFromForm()
       console.log(researcher)
@@ -304,6 +312,8 @@ footer {
       showViewall()
       clearForm()
   }
+
+// Same as above but for delete
   function doDelete(buttonElement){
       console.log("in delete")
       var tableElement = document.getElementById('researcherTable')
@@ -311,18 +321,16 @@ footer {
       id = rowElement.getAttribute("id")
       console.log("deleting "+id)
       deleteResearcher(id, doNothing)
-
       index = rowElement.rowIndex
       tableElement.deleteRow(index);
-
-
   }
 
+// Fetches all the relevant data from the server, turns it into a displayResearcher object and adds it to the table 
   function processGetAllResponseResearcher(result){
       console.log("in process")
       for (researcher of result){
           displayResearcher = {}
-          displayResearcher.id = researcher.id
+          displayResearcher.id = researcher.id // Fetches the id value associated with the researcher object and stores it in the displayResearcher object
           displayResearcher.author = researcher.author
           displayResearcher.title = researcher.title
           displayResearcher.year = researcher.year
@@ -332,6 +340,8 @@ footer {
           addResearcherToTable(displayResearcher)
       }
   }
+
+// Formats the data in a displayResearcher object before sending it to the server
   function convertDisplayResearcherToServerResearcher(displayResearcher){
       serverResearcher = {}
       serverResearcher.id = displayResearcher.id
@@ -343,6 +353,8 @@ footer {
       serverResearcher.amount = parseInt(displayResearcher.amount) // convert the string to an int
       return serverResearcher
   }
+
+// Formats data from the server so that it can be stored in a displayResearcher object
   function convertServerResearcherToDisplayResearcher(researcher){
       displayResearcher = {}
       displayResearcher.id = researcher.id
@@ -354,6 +366,8 @@ footer {
       displayResearcher.amount = researcher.amount
       return displayResearcher
   }
+
+// Handles the process of adding a new entry to the table, showing the updated table and clearing the form
   function processCreateResponse(result){
       displayResearcher = convertServerResearcherToDisplayResearcher(result)
       addResearcherToTable(displayResearcher)
@@ -361,6 +375,7 @@ footer {
       clearForm()
   }
 
+// Keeps things running after the delete and update functions are called
   function doNothing(result){
       console.log("nothing:"+result)
       return "done"
@@ -373,10 +388,10 @@ footer {
 
 function getAllResearcher(callback) {
     $.ajax({
-        url: '/researcher',
-        method: 'GET',
-        dataType: 'json',
-        success: callback
+        url: '/researcher', // URL endpoint
+        method: 'GET',  // CRUD method
+        dataType: 'json', // Response should be parsed as JSON
+        success: callback // If the server responds, return the above
     });
 }
 
@@ -385,7 +400,7 @@ function createResearcher(researcher, callback) {
         url: '/researcher',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(researcher),
+        data: JSON.stringify(researcher), // Server can only recieve JSON, so we convert the data to a JSON string
         success: callback
     });
 }
@@ -412,16 +427,17 @@ function deleteResearcher(id, callback) {
 
 // Comparison functions
 
-// Chatgpt - Why is this comparison button not working?
-$('#compareButton').on('click', function() {
-    var researcherId = $('#researcherId').val();
-    if (researcherId) {
+//Checks if a valid id (i.e. one in the table) has been recieved. If yes, it runs the comparison function otherwise it returns an error message in results space instead.
+$('#compareButton').on('click', function() {  // When the button is clicked, run the function
+    var researcherId = $('#researcherId').val();  //grabs the researcher id from the input box and stores it as a javascript variable
+    if (researcherId) { 
         comparison(researcherId);
     } else {
         $('#comparison').text('Please enter a valid Researcher ID.');
     }
 });
 
+// Ajax call to get the comparison data for the selected researcher ID (see def compareResearcherAmount)
 function comparison(researcherId) {
     $.ajax({
         url: '/compare/' + researcherId,
@@ -436,7 +452,6 @@ function comparison(researcherId) {
               '- Compared to the average grant in the '  + data.programme + ', this grant was <strong>' + data.comparison_programme + '</strong> than average (€' + data.programme_average +')<br>'         
               );
           },
-
         error: function() {
             $('#comparison').text('No researcher ID match.');
         }
