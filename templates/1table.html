@@ -128,7 +128,7 @@ footer {
   to work out it's averages. So, adding your grant to the table below won't impact how well the application does its analysis.</p>  
   <br/>
   <form id="compareForm">
-    <label for="researcherId">Enter Researcher ID:</label>
+    <label for="researcherId">Enter Grant ID:</label>
     <input type="number" id="researcherId" name="researcherId" required>
   </form>
   <button id="compareButton">Compare</button>
@@ -433,7 +433,7 @@ $('#compareButton').on('click', function() {  // When the button is clicked, run
     if (researcherId) { 
         comparison(researcherId);
     } else {
-        $('#comparison').text('Please enter a valid Researcher ID.');
+        $('#comparison').text('Please enter a valid grant ID.');
     }
 });
 
@@ -446,14 +446,14 @@ function comparison(researcherId) {
             $('#comparison').html(
               '<h3>Researcher Grant Analysis</h3>' +
               'You have selected the grant "' + data.title + '" by ' + data.author + '. This grant was awarded in ' + data.year + ' under the ' + data.programme + ' while the awardee was working in ' +  data.institution + '. The total funding was €' + data.amount + '.<br><br>' +
-              '- This grant is <strong>' + data.comparison_overall + '</strong> than the current overall average SFI grant awarded (€'+ data.average_grant_amount +')<br>' +
-              '- In '  + data.year + ' this grant was <strong>' + data.comparison_year + '</strong> than the average SFI grant awarded (€'+ data.year_average+')<br>'+
-              '- When it comes to grants awarded to '  + data.institution + ', this grant is <strong>' + data.comparison_institution + '</strong> than the average SFI grant awarded (€'+ data.institution_average +')<br>'+
-              '- Compared to the average grant in the '  + data.programme + ', this grant was <strong>' + data.comparison_programme + '</strong> than average (€' + data.programme_average +')<br>'         
+              '- This grant is <strong>' + data.comparison_overall + '</strong> than the current overall average SFI grant (which is €'+ data.average_grant_amount +')<br>' +
+              '- In '  + data.year + ' this grant was <strong>' + data.comparison_year + '</strong> than the average SFI grant awarded (which is €'+ data.year_average+')<br>'+
+              '- When it comes to grants awarded to '  + data.institution + ', this grant is <strong>' + data.comparison_institution + '</strong> than the average SFI grant awarded (which is €'+ data.institution_average +')<br>'+
+              '- Compared to the average grant in the '  + data.programme + ', this grant was <strong>' + data.comparison_programme + '</strong> than average (which is €' + data.programme_average +')<br>'         
               );
           },
         error: function() {
-            $('#comparison').text('No researcher ID match.');
+            $('#comparison').text('No grant ID match.');
         }
     });
 }
